@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TravelBoard — Explora el Món</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- CANVAS PARTICLES -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- AURORA BLOBS -->
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora__blob aurora__blob--1"></div>
+    <div class="aurora__blob aurora__blob--2"></div>
+    <div class="aurora__blob aurora__blob--3"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="header__brand">
+        <div class="header__logo"><span>✈</span></div>
+        <div>
+          <h1 class="header__title">TravelBoard</h1>
+          <p class="header__tagline">Explora abans de partir</p>
+        </div>
+      </div>
+      <div class="header__date" id="headerDate"></div>
+    </div>
+  </header>
+
+  <!-- HERO SEARCH -->
+  <section class="hero">
+    <div class="hero__inner">
+      <p class="hero__eyebrow">✦ Dashboard de viatge en temps real</p>
+      <h2 class="hero__headline">On viatgem<br/><em>avui?</em></h2>
+
+      <div class="search-wrap" id="searchWrap">
+        <div class="search-field">
+          <span class="search-field__icon">🔍</span>
+          <input
+            type="text"
+            id="cityInput"
+            class="search-field__input"
+            placeholder="Escriu una ciutat… Barcelona, Tokyo…"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Cerca una ciutat"
+            aria-autocomplete="list"
+            aria-controls="cityDropdown"
+            aria-expanded="false"
+          />
+          <button class="search-field__clear hidden" id="clearBtn" aria-label="Esborrar">✕</button>
+        </div>
+        <ul class="search-dropdown hidden" id="cityDropdown" role="listbox"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <main class="dashboard" id="dashboard">
+
+    <!-- PLACEHOLDER -->
+    <div class="state state--placeholder" id="statePlaceholder">
+      <div class="orb">
+        <div class="orb__ring orb__ring--1"></div>
+        <div class="orb__ring orb__ring--2"></div>
+        <span class="orb__emoji">🌍</span>
+      </div>
+      <p class="state__hint">Selecciona una destinació per carregar<br/>informació en temps real</p>
+      <div class="quick-chips">
+        <button class="chip" data-city="tokyo">🇯🇵 Tokyo</button>
+        <button class="chip" data-city="paris">🇫🇷 Paris</button>
+        <button class="chip" data-city="new_york">🇺🇸 New York</button>
+        <button class="chip" data-city="london">🇬🇧 London</button>
+      </div>
+    </div>
+
+    <!-- LOADING -->
+    <div class="state state--loading hidden" id="stateLoading">
+      <div class="loader">
+        <div class="loader__orbit loader__orbit--1"></div>
+        <div class="loader__orbit loader__orbit--2"></div>
+        <span class="loader__core">✈</span>
+      </div>
+      <p class="state__hint">Carregant dades…</p>
+    </div>
+
+    <!-- ERROR -->
+    <div class="state state--error hidden" id="stateError">
+      <span class="state__emoji">⚠️</span>
+      <p class="state__hint" id="errorText">Error desconegut</p>
+      <button class="btn-primary" id="retryBtn">Torna-ho a intentar</button>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content hidden" id="content">
+
+      <!-- DESTINATION HERO CARD -->
+      <article class="g-card dest-card" id="destCard">
+        <div class="dest-card__glow" id="destGlow"></div>
+        <div class="dest-card__left">
+          <div class="dest-card__flag" id="destFlag"></div>
+          <div>
+            <h2 class="dest-card__city" id="destCity">—</h2>
+            <p class="dest-card__country" id="destCountry">—</p>
+          </div>
+        </div>
+        <div class="dest-card__badges">
+          <div class="dbadge">
+            <span class="dbadge__val" id="destTemp">—</span>
+            <span class="dbadge__key">🌡️ Temp.</span>
+          </div>
+          <div class="dbadge dbadge--accent">
+            <span class="dbadge__val" id="destCurrency">—</span>
+            <span class="dbadge__key">💱 Moneda</span>
+          </div>
+          <div class="dbadge">
+            <span class="dbadge__val" id="destTime">—</span>
+            <span class="dbadge__key">🕐 Hora local</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2-COL: WEATHER + CURRENCY -->
+      <div class="two-col">
+
+        <!-- WEATHER -->
+        <article class="g-card weather-card" id="weatherCard">
+          <div class="weather-card__top">
+            <div>
+              <p class="card-label">🌤 Meteorologia</p>
+              <p class="weather-card__cond" id="wCond">—</p>
+            </div>
+            <span class="weather-card__emoji" id="wEmoji">—</span>
+          </div>
+          <div class="weather-card__temp-row">
+            <span class="weather-card__temp" id="wTemp">—</span>
+            <span class="weather-card__unit">°C</span>
+          </div>
+          <div class="weather-card__grid">
+            <div class="wg-item">
+              <span class="wg-item__icon">💨</span>
+              <span class="wg-item__val" id="wWind">—</span>
+              <span class="wg-item__lbl">Vent km/h</span>
+            </div>
+            <div class="wg-item">
+              <span class="wg-item__icon">💧</span>
+              <span class="wg-item__val" id="wHumidity">—</span>
+              <span class="wg-item__lbl">Humitat %</span>
+            </div>
+            <div class="wg-item">
+              <span class="wg-item__icon">🌡️</span>
+              <span class="wg-item__val" id="wApparent">—</span>
+              <span class="wg-item__lbl">Sensació °C</span>
+            </div>
+          </div>
+          <div class="rain-bar">
+            <div class="rain-bar__header">
+              <span id="rainLabel">Pluja</span>
+              <span class="rain-bar__pct" id="rainPct">0%</span>
+            </div>
+            <div class="rain-bar__track">
+              <div class="rain-bar__fill" id="rainFill" style="width:0%"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CURRENCY -->
+        <article class="g-card currency-card" id="currencyCard">
+          <p class="card-label">💱 Conversió de moneda</p>
+          <div class="curr-input-row">
+            <input type="number" id="eurInput" class="curr-input" value="100" min="0" step="any" />
+            <span class="curr-tag">EUR</span>
+          </div>
+          <button class="convert-btn" id="convertBtn">
+            Convertir <span class="convert-btn__arrow">→</span>
+          </button>
+          <div class="curr-result hidden" id="currResult">
+            <div class="curr-result__col">
+              <span class="curr-result__num" id="resEur">—</span>
+              <span class="curr-result__code">EUR</span>
+            </div>
+            <div class="curr-result__divider">→</div>
+            <div class="curr-result__col curr-result__col--gold">
+              <span class="curr-result__num" id="resLocal">—</span>
+              <span class="curr-result__code" id="resCode">—</span>
+            </div>
+          </div>
+          <p class="curr-rate" id="currRate"></p>
+        </article>
+
+      </div>
+
+      <!-- TIP CARD -->
+      <article class="g-card tip-card" id="tipCard">
+        <span class="tip-card__plane">✈</span>
+        <div>
+          <p class="card-label">Recomanació de viatge</p>
+          <p class="tip-card__text" id="tipText">—</p>
+        </div>
+      </article>
+
+    </div><!-- /content -->
+  </main>
+
+  <footer class="footer">
+    <p>Dades en temps real · <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> · <a href="https://frankfurter.app" target="_blank" rel="noopener">Frankfurter</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
