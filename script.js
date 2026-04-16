@@ -176,8 +176,10 @@ async function fetchWeather(lat, lon, timezone) {
 // ─── 9. FETCH CANVI DE MONEDA ─────────────────
 async function fetchRate(currency) {
   if (currency === "EUR") return 1;
-  const res = await fetch(`https://api.frankfurter.app/latest?from=EUR&to=${currency}`);
+
+  const res = await fetch(`/api/rate?from=EUR&to=${currency}`);
   if (!res.ok) throw new Error(`Divises: ${res.status}`);
+
   const data = await res.json();
   return data.rates[currency];
 }
