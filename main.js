@@ -16,7 +16,6 @@ const CITIES = {
   berlin:     { name:"Berlin",      country:"Alemanya",      flag:"🇩🇪", lat:52.52,   lon:13.405,    currency:"EUR", timezone:"Europe/Berlin"    },
   amsterdam:  { name:"Amsterdam",   country:"Països Baixos", flag:"🇳🇱", lat:52.3676, lon:4.9041,    currency:"EUR", timezone:"Europe/Amsterdam" },
   rome:       { name:"Roma",        country:"Itàlia",        flag:"🇮🇹", lat:41.9028, lon:12.4964,   currency:"EUR", timezone:"Europe/Rome"      },
-  dubai:      { name:"Dubai",       country:"EAU",           flag:"🇦🇪", lat:25.2048, lon:55.2708,   currency:"AED", timezone:"Asia/Dubai"       },
   sydney:     { name:"Sydney",      country:"Austràlia",     flag:"🇦🇺", lat:-33.8688,lon:151.2093,  currency:"AUD", timezone:"Australia/Sydney" },
   toronto:    { name:"Toronto",     country:"Canadà",        flag:"🇨🇦", lat:43.6532, lon:-79.3832,  currency:"CAD", timezone:"America/Toronto"  },
   seoul:      { name:"Seül",        country:"Corea del Sud", flag:"🇰🇷", lat:37.5665, lon:126.978,   currency:"KRW", timezone:"Asia/Seoul"       },
