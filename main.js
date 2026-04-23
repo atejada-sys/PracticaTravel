@@ -21,7 +21,6 @@ const CITIES = {
   seoul:      { name:"Seül",        country:"Corea del Sud", flag:"🇰🇷", lat:37.5665, lon:126.978,   currency:"KRW", timezone:"Asia/Seoul"       },
   bangkok:    { name:"Bangkok",     country:"Tailàndia",     flag:"🇹🇭", lat:13.7563, lon:100.5018,  currency:"THB", timezone:"Asia/Bangkok"     },
   mexico:     { name:"Mèxic DF",    country:"Mèxic",         flag:"🇲🇽", lat:19.4326, lon:-99.1332,  currency:"MXN", timezone:"America/Mexico_City"},
-  buenos_aires:{name:"Buenos Aires",country:"Argentina",     flag:"🇦🇷", lat:-34.6037,lon:-58.3816,  currency:"ARS", timezone:"America/Argentina/Buenos_Aires"},
   istanbul:   { name:"Istanbul",    country:"Turquia",       flag:"🇹🇷", lat:41.0082, lon:28.9784,   currency:"TRY", timezone:"Europe/Istanbul"  },
 };
 
